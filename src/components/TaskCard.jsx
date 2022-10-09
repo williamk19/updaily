@@ -1,14 +1,14 @@
 import React from "react";
-import { 
-  CardContent, 
-  CardActions, 
-  Button, 
-  Typography, 
-  Box, 
-  Card 
-} from '@mui/material';
+import {
+  CardContent,
+  CardActions,
+  Button,
+  Typography,
+  Box,
+  Card,
+} from "@mui/material";
 
-const TaskCard = ({judul, deskripsi, tanggal}) => {
+const TaskCard = ({ judul, deskripsi, tanggal }) => {
   const bull = (
     <Box
       component="span"
@@ -19,7 +19,7 @@ const TaskCard = ({judul, deskripsi, tanggal}) => {
   );
 
   return (
-    <Card variant="outlined" style={{ marginTop: 20, maxWidth: '500px' }}>
+    <Card variant="outlined" style={{ marginTop: 20, maxWidth: "500px" }}>
       <React.Fragment>
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -29,11 +29,9 @@ const TaskCard = ({judul, deskripsi, tanggal}) => {
             {judul}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            {`${tanggal.toDate()}`}
+            {`${tanggal}`}
           </Typography>
-          <Typography variant="body2">
-            {deskripsi}
-          </Typography>
+          <Typography variant="body2">{deskripsi}</Typography>
         </CardContent>
         <CardActions>
           <Button size="small">Learn More</Button>

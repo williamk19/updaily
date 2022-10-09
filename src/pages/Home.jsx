@@ -2,6 +2,7 @@ import { Box, TextField } from "@mui/material";
 import React, { useState } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Button from "@mui/material/Button";
@@ -28,26 +29,23 @@ const data = [
 ];
 
 const Home = () => {
-  const [value, setValue] = useState(dayjs("2014-08-18T21:11:54"));
+  const [date, setDate] = useState(dayjs("").toString());
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [inProgress, setInProgress] = useState(false);
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
-
+  const [status, setStatus] = useState(false);
+  dayjs.extend(utc);
   const addTodo = async (e) => {
     e.preventDefault();
-    
-    // console.log(`mau ${title}, pada ${value}, ${description}`);
+
+    console.log(`mau ${title}, pada ${date}, ${description}`);
     const data = {
-      date: '2121312',
+      date: date.toString(),
       title: title,
       description: description,
-      inProgress: false,
-    }
+      status: false,
+    };
 
-    await setDoc(doc(db, "taskCard", "valueCard"), data);
+    await addDoc(collection(db, "taskCard"), data);
 
     // const docRef = await addDoc(collection(db, "taskCard"), {
     //   date: value,
@@ -93,8 +91,10 @@ const Home = () => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
                   label="Date&Time picker"
-                  value={value}
-                  onChange={handleChange}
+                  value={date}
+                  onChange={(e) => {
+                    setDate(dayjs(e).utc());
+                  }}
                   renderInput={(params) => <TextField {...params} />}
                 />
               </LocalizationProvider>
@@ -111,7 +111,7 @@ const Home = () => {
               }}
             />
             <Box style={{ display: "flex" }}>
-              <Button variant="outlined" type="submit" onClick={addTodo}>
+              <Button variant="outlined" type="submit">
                 Tambahkan
               </Button>
             </Box>
