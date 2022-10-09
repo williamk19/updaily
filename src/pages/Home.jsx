@@ -35,16 +35,19 @@ const Home = () => {
   const handleChange = (newValue) => {
     setValue(newValue);
   };
+
   const addTodo = async (e) => {
     e.preventDefault();
-    console.log(`mau ${title}, pada ${value}, ${description}`);
-
-    await setDoc(doc(db, "taskCard", "valueCard"), {
-      date: "value",
-      title: "title",
-      description: "description",
+    
+    // console.log(`mau ${title}, pada ${value}, ${description}`);
+    const data = {
+      date: '2121312',
+      title: title,
+      description: description,
       inProgress: false,
-    });
+    }
+
+    await setDoc(doc(db, "taskCard", "valueCard"), data);
 
     // const docRef = await addDoc(collection(db, "taskCard"), {
     //   date: value,
@@ -54,6 +57,7 @@ const Home = () => {
     // });
     // console.log("Document written with ID: ", docRef.id);
   };
+
   return (
     <div className="Home">
       <Box
@@ -107,7 +111,7 @@ const Home = () => {
               }}
             />
             <Box style={{ display: "flex" }}>
-              <Button variant="outlined" type="submit">
+              <Button variant="outlined" type="submit" onClick={addTodo}>
                 Tambahkan
               </Button>
             </Box>
