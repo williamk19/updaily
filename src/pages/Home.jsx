@@ -1,5 +1,5 @@
 import { Box, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -8,27 +8,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Button from "@mui/material/Button";
 import TaskCard from "../components/TaskCard";
 import { db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
-
-const data = [
-  {
-    id: 1,
-    judul: "Ini task pertama",
-    deskripsi:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe repellat blanditiis hic a enim consectetur soluta ad doloribus, error commodi voluptates molestias facilis odit vitae sunt molestiae rem. Earum, in!",
-    tanggal: dayjs("2014-08-18T21:11:54"),
-  },
-  {
-    id: 2,
-    judul: "Ini task kedua",
-    deskripsi:
-      "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe repellat blanditiis hic a enim consectetur soluta ad doloribus, error commodi voluptates molestias facilis odit vitae sunt molestiae rem. Earum, in!",
-    tanggal: dayjs("2014-08-18T21:11:54"),
-  },
-];
+import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore";
 
 const Home = () => {
+  const [data, setData] = useState([]);
   const [date, setDate] = useState(dayjs("").toString());
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -46,7 +29,7 @@ const Home = () => {
     };
 
     await addDoc(collection(db, "taskCard"), data);
-
+    getData();
     // const docRef = await addDoc(collection(db, "taskCard"), {
     //   date: value,
     //   description: description,
@@ -55,6 +38,19 @@ const Home = () => {
     // });
     // console.log("Document written with ID: ", docRef.id);
   };
+  const getData = async () => {
+    const querySnapshot = await getDocs(collection(db, "taskCard"));
+    // console.log(querySnapshot.docs);
+    // querySnapshot.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   console.log(doc.id, " => ", doc.data());
+    // });
+    setData(querySnapshot.docs);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <div className="Home">
@@ -83,10 +79,10 @@ const Home = () => {
                 label="Rencana Hari ini"
                 variant="outlined"
                 value={title}
+                style={{ marginRight: 20 }}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
-                style={{}}
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
@@ -118,14 +114,27 @@ const Home = () => {
           </form>
 
           <Box sx={{ minWidth: 275 }}>
-            {data.map((d) => (
-              <TaskCard
-                key={d.id}
-                judul={d.judul}
-                deskripsi={d.deskripsi}
-                tanggal={d.tanggal}
-              />
-            ))}
+            {data
+              .sort((a, b) => {
+                return new Date(a.data().date) - new Date(b.data().date);
+              })
+              .map((d) => {
+                // console.log(d.data());
+                // console.log(new Date(d.data().date));
+                // d.sort(function (a, b) {
+                //   // Turn your strings into dates, and then subtract them
+                //   // to get a value that is either negative, positive, or zero.
+                //   return new Date(b.data().date) - new Date(a.data().date);
+                // });
+                return (
+                  <TaskCard
+                    key={d.id}
+                    judul={d.data().title}
+                    deskripsi={d.data().description}
+                    tanggal={d.data().date}
+                  />
+                );
+              })}
           </Box>
         </Box>
       </Box>
