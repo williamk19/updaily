@@ -8,14 +8,20 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Button from "@mui/material/Button";
 import TaskCard from "../components/TaskCard";
 import { db } from "../firebase";
-import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  setDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [date, setDate] = useState(dayjs("").toString());
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState(false);
   dayjs.extend(utc);
   const addTodo = async (e) => {
     e.preventDefault();
@@ -25,7 +31,7 @@ const Home = () => {
       date: date.toString(),
       title: title,
       description: description,
-      status: false,
+      status: "To do",
     };
 
     await addDoc(collection(db, "taskCard"), data);
@@ -46,6 +52,11 @@ const Home = () => {
     //   console.log(doc.id, " => ", doc.data());
     // });
     setData(querySnapshot.docs);
+  };
+
+  const handleDeleteButton = async (db, id) => {
+    await deleteDoc(doc(db, "taskCard", id));
+    getData();
   };
 
   useEffect(() => {
@@ -118,7 +129,7 @@ const Home = () => {
               .sort((a, b) => {
                 return new Date(a.data().date) - new Date(b.data().date);
               })
-              .map((d) => {
+              .map((d, index) => {
                 // console.log(d.data());
                 // console.log(new Date(d.data().date));
                 // d.sort(function (a, b) {
@@ -128,10 +139,13 @@ const Home = () => {
                 // });
                 return (
                   <TaskCard
-                    key={d.id}
+                    key={index}
+                    id={d.id}
                     judul={d.data().title}
                     deskripsi={d.data().description}
                     tanggal={d.data().date}
+                    status={d.data().status}
+                    handleDeleteButton={handleDeleteButton}
                   />
                 );
               })}
