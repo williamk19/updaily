@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Button from "@mui/material/Button";
 import TaskCard from "../components/TaskCard";
 import { db } from "../firebase";
+import "../App.css";
 import {
   collection,
   addDoc,
@@ -68,9 +69,8 @@ const Home = () => {
       <Box
         style={{
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           justifyContent: "center",
-          alignItems: "center",
           paddingBottom: 50,
         }}
       >
@@ -81,51 +81,101 @@ const Home = () => {
             gap: 20,
           }}
         >
-          <p style={{ fontSize: 50, fontWeight: "bold" }}>Todo-List Keren</p>
+          <p style={{ fontSize: 30, fontWeight: "bold" }}>Todo-List Keren</p>
 
           <form onSubmit={addTodo}>
-            <Box style={{ display: "flex", justifyContent: "space-between" }}>
+            <Box
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+              }}
+            >
               <TextField
+                className="input-rounded"
                 id="outlined-basic"
                 label="Rencana Hari ini"
                 variant="outlined"
                 value={title}
-                style={{ marginRight: 20 }}
+                sx={{ marginBottom: 2 }}
                 onChange={(e) => {
                   setTitle(e.target.value);
                 }}
               />
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DateTimePicker
+                  className="input-rounded"
                   label="Date&Time picker"
                   value={date}
                   onChange={(e) => {
                     setDate(dayjs(e).utc());
                   }}
                   renderInput={(params) => <TextField {...params} />}
+                  sx={{ borderRadius: 26 }}
                 />
               </LocalizationProvider>
             </Box>
             <TextField
               fullWidth
-              style={{ marginBottom: 20, marginTop: 20 }}
+              className="input-rounded"
+              style={{ marginBottom: 20, marginTop: 20, borderRadius: 26 }}
               id="outlined-basic"
               label="Deskripsi"
               variant="outlined"
               value={description}
+              multiline
+              rows={5}
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
             />
-            <Box style={{ display: "flex" }}>
-              <Button variant="outlined" type="submit">
+            <Box sx={{ display: "flex" }}>
+              <Button
+                style={{ borderRadius: 26 }}
+                variant="outlined"
+                type="submit"
+              >
                 Tambahkan
               </Button>
             </Box>
           </form>
-
-          <Box sx={{ minWidth: 275 }}>
+        </Box>
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 30,
+            marginLeft: 20,
+          }}
+        >
+          <Box
+            sx={{
+              maxWidth: 300,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                border: "2px solid #C11717",
+                width: 300,
+                backgroundColor: "#E84C4C",
+                paddingTop: 1.5,
+                paddingBottom: 1.5,
+                paddingLeft: 1.5,
+                borderRadius: 26,
+                marginRight: 10,
+                marginLeft: 10,
+                marginY: 2,
+              }}
+            >
+              To Do
+            </Typography>
             {data
+              .filter((e) => {
+                return e.data().status === "To do";
+              })
               .sort((a, b) => {
                 return new Date(a.data().date) - new Date(b.data().date);
               })
@@ -146,6 +196,116 @@ const Home = () => {
                     tanggal={d.data().date}
                     status={d.data().status}
                     handleDeleteButton={handleDeleteButton}
+                    getData={getData}
+                    color="#FFE3E3"
+                  />
+                );
+              })}
+          </Box>
+          <Box
+            sx={{
+              maxWidth: 300,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                border: "2px solid #CBC42B",
+                width: 300,
+                backgroundColor: "#FAF357",
+                paddingTop: 1.5,
+                paddingBottom: 1.5,
+                paddingLeft: 1.5,
+                borderRadius: 26,
+                marginRight: 10,
+                marginLeft: 10,
+                marginY: 2,
+              }}
+            >
+              In Progress
+            </Typography>
+            {data
+              .filter((e) => {
+                return e.data().status === "In Progress";
+              })
+              .sort((a, b) => {
+                return new Date(a.data().date) - new Date(b.data().date);
+              })
+              .map((d, index) => {
+                // console.log(d.data());
+                // console.log(new Date(d.data().date));
+                // d.sort(function (a, b) {
+                //   // Turn your strings into dates, and then subtract them
+                //   // to get a value that is either negative, positive, or zero.
+                //   return new Date(b.data().date) - new Date(a.data().date);
+                // });
+                return (
+                  <TaskCard
+                    key={index}
+                    id={d.id}
+                    judul={d.data().title}
+                    deskripsi={d.data().description}
+                    tanggal={d.data().date}
+                    status={d.data().status}
+                    handleDeleteButton={handleDeleteButton}
+                    getData={getData}
+                    color="#FFFCE3"
+                  />
+                );
+              })}
+          </Box>
+          <Box
+            sx={{
+              maxWidth: 300,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                border: "2px solid #31A515",
+                width: 300,
+                backgroundColor: "#6AF048",
+                paddingTop: 1.5,
+                paddingBottom: 1.5,
+                paddingLeft: 1.5,
+                borderRadius: 26,
+                marginRight: 10,
+                marginLeft: 10,
+                marginY: 2,
+              }}
+            >
+              Finish
+            </Typography>
+            {data
+              .filter((e) => {
+                return e.data().status === "Finish";
+              })
+              .sort((a, b) => {
+                return new Date(a.data().date) - new Date(b.data().date);
+              })
+              .map((d, index) => {
+                // console.log(d.data());
+                // console.log(new Date(d.data().date));
+                // d.sort(function (a, b) {
+                //   // Turn your strings into dates, and then subtract them
+                //   // to get a value that is either negative, positive, or zero.
+                //   return new Date(b.data().date) - new Date(a.data().date);
+                // });
+                return (
+                  <TaskCard
+                    key={index}
+                    id={d.id}
+                    judul={d.data().title}
+                    deskripsi={d.data().description}
+                    tanggal={d.data().date}
+                    status={d.data().status}
+                    handleDeleteButton={handleDeleteButton}
+                    getData={getData}
+                    color="#E3FFE9"
                   />
                 );
               })}

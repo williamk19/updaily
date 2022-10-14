@@ -8,7 +8,7 @@ import {
   Card,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import ClearIcon from "@mui/icons-material/Clear";
+import DeleteIcon from "@mui/icons-material/Delete";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -22,6 +22,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { db } from "../firebase";
+import "../App.css";
 
 const TaskCard = ({
   id,
@@ -30,6 +31,8 @@ const TaskCard = ({
   tanggal,
   status,
   handleDeleteButton,
+  getData,
+  color,
 }) => {
   const [changeStatus, setChangeStatus] = useState(status);
   const [isDeleted, setIsDeleted] = useState(false);
@@ -42,14 +45,15 @@ const TaskCard = ({
       status: changeStatus,
     };
     await updateDoc(doc(db, "taskCard", id), data);
+    getData();
   };
   // const handleDeleteButton = async () => {
   //   await deleteDoc(doc(db, "taskCard", id));
   //   // setIsDeleted(true);
   // };
-  const getData = async () => {
-    await getDocs(collection(db, "taskCard"));
-  };
+  // const getData = async () => {
+  //   await getDocs(collection(db, "taskCard"));
+  // };
   useEffect(() => {
     updateStatus();
   }, [changeStatus]);
@@ -58,12 +62,14 @@ const TaskCard = ({
   // }, [isDeleted]);
   return (
     <Card
+      className="TaskCard"
       variant="outlined"
       style={{
         marginTop: 20,
         maxWidth: "500px",
         display: "flex",
-        justifyContent: "space-between",
+        flexDirection: "column",
+        borderRadius: 26,
       }}
     >
       <CardContent>
@@ -75,13 +81,22 @@ const TaskCard = ({
         </Typography>
         <Typography variant="body2">{deskripsi}</Typography>
       </CardContent>
-      <Box sx={{ fontSize: 14 }} color="text.secondary">
+      <Box
+        sx={{
+          fontSize: 14,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+        color="text.secondary"
+      >
         <FormControl style={{ width: 150, margin: 20 }}>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             value={changeStatus}
             onChange={handleChange}
+            sx={{ backgroundColor: color }}
           >
             <MenuItem value="">{status}</MenuItem>
             <MenuItem value={"To do"}>To do</MenuItem>
@@ -96,7 +111,7 @@ const TaskCard = ({
             handleDeleteButton(db, id);
           }}
         >
-          <ClearIcon />
+          <DeleteIcon style={{ fontSize: 30, marginRight: 10 }} />
         </IconButton>
       </Box>
     </Card>
