@@ -158,13 +158,13 @@ const Home = () => {
           >
             <Typography
               sx={{
-                border: "2px solid #C11717",
+                border: "2px solid #1C588E",
                 width: 300,
-                backgroundColor: "#E84C4C",
+                backgroundColor: "#4D9EE8",
                 paddingTop: 1.5,
                 paddingBottom: 1.5,
                 paddingLeft: 1.5,
-                borderRadius: 26,
+                borderRadius: 4.5,
                 marginRight: 10,
                 marginLeft: 10,
                 marginY: 2,
@@ -197,7 +197,7 @@ const Home = () => {
                     status={d.data().status}
                     handleDeleteButton={handleDeleteButton}
                     getData={getData}
-                    color="#FFE3E3"
+                    color="#D4EBFF"
                   />
                 );
               })}
@@ -218,7 +218,7 @@ const Home = () => {
                 paddingTop: 1.5,
                 paddingBottom: 1.5,
                 paddingLeft: 1.5,
-                borderRadius: 26,
+                borderRadius: 4.5,
                 marginRight: 10,
                 marginLeft: 10,
                 marginY: 2,
@@ -272,7 +272,7 @@ const Home = () => {
                 paddingTop: 1.5,
                 paddingBottom: 1.5,
                 paddingLeft: 1.5,
-                borderRadius: 26,
+                borderRadius: 4.5,
                 marginRight: 10,
                 marginLeft: 10,
                 marginY: 2,
