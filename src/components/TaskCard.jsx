@@ -47,19 +47,11 @@ const TaskCard = ({
     await updateDoc(doc(db, "taskCard", id), data);
     getData();
   };
-  // const handleDeleteButton = async () => {
-  //   await deleteDoc(doc(db, "taskCard", id));
-  //   // setIsDeleted(true);
-  // };
-  // const getData = async () => {
-  //   await getDocs(collection(db, "taskCard"));
-  // };
+
   useEffect(() => {
     updateStatus();
   }, [changeStatus]);
-  // useEffect(() => {
-  //   getData();
-  // }, [isDeleted]);
+
   return (
     <Card
       className="TaskCard"

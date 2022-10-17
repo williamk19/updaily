@@ -37,21 +37,10 @@ const Home = () => {
 
     await addDoc(collection(db, "taskCard"), data);
     getData();
-    // const docRef = await addDoc(collection(db, "taskCard"), {
-    //   date: value,
-    //   description: description,
-    //   isProgress: false,
-    //   title: title,
-    // });
-    // console.log("Document written with ID: ", docRef.id);
   };
   const getData = async () => {
     const querySnapshot = await getDocs(collection(db, "taskCard"));
-    // console.log(querySnapshot.docs);
-    // querySnapshot.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   console.log(doc.id, " => ", doc.data());
-    // });
+
     setData(querySnapshot.docs);
   };
 
@@ -180,13 +169,6 @@ const Home = () => {
                 return new Date(a.data().date) - new Date(b.data().date);
               })
               .map((d, index) => {
-                // console.log(d.data());
-                // console.log(new Date(d.data().date));
-                // d.sort(function (a, b) {
-                //   // Turn your strings into dates, and then subtract them
-                //   // to get a value that is either negative, positive, or zero.
-                //   return new Date(b.data().date) - new Date(a.data().date);
-                // });
                 return (
                   <TaskCard
                     key={index}
@@ -234,13 +216,6 @@ const Home = () => {
                 return new Date(a.data().date) - new Date(b.data().date);
               })
               .map((d, index) => {
-                // console.log(d.data());
-                // console.log(new Date(d.data().date));
-                // d.sort(function (a, b) {
-                //   // Turn your strings into dates, and then subtract them
-                //   // to get a value that is either negative, positive, or zero.
-                //   return new Date(b.data().date) - new Date(a.data().date);
-                // });
                 return (
                   <TaskCard
                     key={index}
@@ -288,13 +263,6 @@ const Home = () => {
                 return new Date(a.data().date) - new Date(b.data().date);
               })
               .map((d, index) => {
-                // console.log(d.data());
-                // console.log(new Date(d.data().date));
-                // d.sort(function (a, b) {
-                //   // Turn your strings into dates, and then subtract them
-                //   // to get a value that is either negative, positive, or zero.
-                //   return new Date(b.data().date) - new Date(a.data().date);
-                // });
                 return (
                   <TaskCard
                     key={index}
