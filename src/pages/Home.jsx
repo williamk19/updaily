@@ -47,6 +47,7 @@ const Home = () => {
             xs: "column",
             md: "row",
           },
+          alignItems: { xs: "center", md: "normal" },
           justifyContent: "center",
           paddingBottom: 5,
         }}

@@ -33,6 +33,8 @@ const Form = ({ getData }) => {
         display: "flex",
         flexDirection: "column",
         gap: 20,
+        maxWidth: 300,
+        minWidth: 300,
       }}
     >
       <p style={{ fontSize: 30, fontWeight: "bold" }}>Todo-List Keren</p>
