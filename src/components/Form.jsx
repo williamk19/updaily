@@ -24,9 +24,9 @@ const Form = ({ getData }) => {
     await addDoc(collection(db, "taskCard"), data);
     getData();
   };
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
   return (
     <Box
       style={{

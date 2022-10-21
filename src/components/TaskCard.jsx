@@ -90,7 +90,6 @@ const TaskCard = ({
             onChange={handleChange}
             sx={{ borderRadius: 20, backgroundColor: color }}
           >
-            <MenuItem value={status}>{status}</MenuItem>
             <MenuItem value={"To do"}>To do</MenuItem>
             <MenuItem value={"In Progress"}>In Progress</MenuItem>
             <MenuItem value={"Finish"}>Finish</MenuItem>
