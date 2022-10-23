@@ -15,7 +15,7 @@ const Form = ({ getData }) => {
 
     console.log(`mau ${title}, pada ${date}, ${description}`);
     const data = {
-      date: date.toString(),
+      date: date.toString() + " +7",
       title: title,
       description: description,
       status: "To do",
@@ -24,9 +24,9 @@ const Form = ({ getData }) => {
     await addDoc(collection(db, "taskCard"), data);
     getData();
   };
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
   return (
     <Box
       style={{
