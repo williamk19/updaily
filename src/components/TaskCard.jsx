@@ -86,7 +86,7 @@ const TaskCard = ({
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={changeStatus}
+            value={status}
             onChange={handleChange}
             sx={{ borderRadius: 20, backgroundColor: color }}
           >
