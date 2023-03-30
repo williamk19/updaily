@@ -3,7 +3,7 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { addDoc, collection } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { db } from "../firebase";
 
 const Form = ({ getData }) => {
@@ -13,7 +13,6 @@ const Form = ({ getData }) => {
   const addTodo = async (e) => {
     e.preventDefault();
 
-    console.log(`mau ${title}, pada ${date}, ${description}`);
     const data = {
       date: date.toString() + " +7",
       title: title,
@@ -24,9 +23,7 @@ const Form = ({ getData }) => {
     await addDoc(collection(db, "taskCard"), data);
     getData();
   };
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+
   return (
     <Box
       style={{
@@ -37,7 +34,7 @@ const Form = ({ getData }) => {
         minWidth: 300,
       }}
     >
-      <p style={{ fontSize: 30, fontWeight: "bold" }}>Todo-List Keren</p>
+      <p style={{ fontSize: 30, fontWeight: "bold" }}>Updaily</p>
 
       <form onSubmit={addTodo}>
         <Box
