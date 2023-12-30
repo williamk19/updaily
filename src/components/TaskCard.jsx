@@ -1,28 +1,13 @@
-import React, { useEffect, useState } from "react";
-import {
-  CardContent,
-  CardActions,
-  Button,
-  Typography,
-  Box,
-  Card,
-} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import {
-  collection,
-  doc,
-  setDoc,
-  updateDoc,
-  deleteDoc,
-  getDocs,
-} from "firebase/firestore";
-import { db } from "../firebase";
-import "../App.css";
+import React from 'react';
+import { CardContent, Typography, Box, Card } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import '../App.css';
 
 const TaskCard = ({
   id,
@@ -34,75 +19,87 @@ const TaskCard = ({
   getData,
   color,
 }) => {
-  const [changeStatus, setChangeStatus] = useState(status);
-  const [isDeleted, setIsDeleted] = useState(false);
-  const handleChange = async (e) => {
-    e.preventDefault();
-    setChangeStatus(e.target.value);
-  };
-  const updateStatus = async () => {
+  const formattedDate = new Date(tanggal).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  });
+
+  const updateStatus = async (status) => {
     const data = {
-      status: changeStatus,
+      status,
     };
-    await updateDoc(doc(db, "taskCard", id), data);
+    console.log(data, id);
+    await updateDoc(doc(db, 'taskCard', id), data);
     getData();
   };
 
-  useEffect(() => {
-    updateStatus();
-  }, [changeStatus]);
+  const handleChange = async (e) => {
+    e.preventDefault();
+    updateStatus(e.target.value);
+  };
 
   return (
     <Card
-      className="TaskCard"
-      variant="outlined"
-      style={{
-        marginTop: 20,
-        maxWidth: "500px",
-        display: "flex",
-        flexDirection: "column",
-        borderRadius: 26,
-      }}
-    >
+      className='TaskCard'
+      variant='outlined'
+      sx={{
+        width: '95%',
+        marginTop: 2,
+        boxShadow: 2,
+        maxWidth: '500px',
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: 2,
+      }}>
       <CardContent>
-        <Typography variant="h5" component="div">
+        <Typography
+          sx={{
+            fontWeight: 600,
+          }}
+          component='div'>
           {judul}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {`${tanggal}`}
+        <Typography
+          sx={{ mb: 1.5 }}
+          color='text.secondary'>
+          {`${formattedDate}`}
         </Typography>
-        <Typography variant="body2">{deskripsi}</Typography>
+        <Typography variant='body2'>{deskripsi}</Typography>
       </CardContent>
       <Box
         sx={{
           fontSize: 14,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
         }}
-        color="text.secondary"
-      >
+        color='text.secondary'>
         <FormControl style={{ width: 150, margin: 20 }}>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
             value={status}
             onChange={handleChange}
-            sx={{ borderRadius: 20, backgroundColor: color }}
-          >
-            <MenuItem value={"To do"}>To do</MenuItem>
-            <MenuItem value={"In Progress"}>In Progress</MenuItem>
-            <MenuItem value={"Finish"}>Finish</MenuItem>
+            style={{ height: 40 }}
+            sx={{ borderRadius: 3, backgroundColor: color, boxShadow: 2 }}>
+            <MenuItem value={'To do'}>To do</MenuItem>
+            <MenuItem value={'In Progress'}>In Progress</MenuItem>
+            <MenuItem value={'Finish'}>Finish</MenuItem>
           </Select>
         </FormControl>
         <IconButton
-          aria-label="delete"
-          color="error"
+          aria-label='delete'
+          color='error'
+          sx={{
+            mr: 1,
+          }}
           onClick={() => {
             handleDeleteButton(db, id);
-          }}
-        >
-          <DeleteIcon style={{ fontSize: 30, marginRight: 10 }} />
+          }}>
+          <DeleteIcon style={{ fontSize: 30 }} />
         </IconButton>
       </Box>
     </Card>
