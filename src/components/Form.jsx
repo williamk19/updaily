@@ -1,17 +1,41 @@
-import { Box, Button, TextField } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { addDoc, collection } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 
 const Form = ({ getData }) => {
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+
+  useEffect(() => {
+    if (isAlertOpen === false) {
+      setTimeout(() => {
+        setAlertMessage('');
+      }, 3000)
+    }
+  }, [isAlertOpen]);
+
   const addTodo = async (e) => {
     e.preventDefault();
+
+    if (title.length < 3 || description < 3) {
+      setIsAlertOpen(true);
+      setAlertMessage('Judul rencana dan deskripsi minimal 2 karakter');
+      return;
+    }
 
     const data = {
       date: date.toString() + ' +7',
@@ -23,21 +47,50 @@ const Form = ({ getData }) => {
     await addDoc(collection(db, 'taskCard'), data);
     getData();
 
-    setDate(new Date())
+    setDate(new Date());
     setTitle('');
     setDescription('');
   };
 
+  const closeIsAlertOpen = () => {
+    setIsAlertOpen(false);
+  };
+
   return (
     <Box
-      style={{
+      sx={{
+        paddingTop: 5,
         display: 'flex',
         flexDirection: 'column',
-        gap: 20,
+        gap: 4,
         maxWidth: 300,
         minWidth: 300,
       }}>
-      <p style={{ fontSize: 30, fontWeight: 'bold' }}>Updaily</p>
+      <Snackbar
+        open={isAlertOpen}
+        autoHideDuration={5000}
+        onClose={closeIsAlertOpen}
+        message='Note archived'>
+        <Alert
+          onClose={closeIsAlertOpen}
+          severity='error'>
+          {alertMessage}
+        </Alert>
+      </Snackbar>
+      <Box>
+        <Typography
+          sx={{
+            fontSize: 25,
+            fontWeight: 'bold',
+            textShadow: '1px 1px 1px rgba(0,0,0,0.25);',
+          }}>
+          UpDaily.
+        </Typography>
+        <Typography fontSize={14}>
+          Simplify tasks in a Kanban-style interface, effortlessly organizing
+          to-do lists for enhanced daily productivity and efficiency.
+        </Typography>
+      </Box>
       <form onSubmit={addTodo}>
         <Box
           style={{
@@ -102,8 +155,8 @@ const Form = ({ getData }) => {
         </Box>
         <Box sx={{ display: 'flex', marginTop: 3 }}>
           <Button
-            sx={{ borderRadius: 26, boxShadow: 2 }}
-            variant='outlined'
+            sx={{ borderRadius: 2, boxShadow: 2 }}
+            variant='contained'
             type='submit'>
             Tambahkan
           </Button>

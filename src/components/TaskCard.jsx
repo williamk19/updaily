@@ -46,7 +46,7 @@ const TaskCard = ({
       className='TaskCard'
       variant='outlined'
       sx={{
-        width: '95%',
+        width: '100%',
         marginTop: 2,
         boxShadow: 2,
         maxWidth: '500px',

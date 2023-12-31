@@ -1,29 +1,24 @@
-import { Box, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import TaskCard from "../components/TaskCard";
-import { db } from "../firebase";
-import "../App.css";
-import {
-  collection,
-  getDocs,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
-import Form from "../components/Form";
+import { Box, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import TaskCard from '../components/TaskCard';
+import { db } from '../firebase';
+import '../App.css';
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import Form from '../components/Form';
 
 const Home = () => {
   const [data, setData] = useState([]);
   dayjs.extend(utc);
 
   const getData = async () => {
-    const querySnapshot = await getDocs(collection(db, "taskCard"));
+    const querySnapshot = await getDocs(collection(db, 'taskCard'));
     setData(querySnapshot.docs);
   };
 
   const handleDeleteButton = async (db, id) => {
-    await deleteDoc(doc(db, "taskCard", id));
+    await deleteDoc(doc(db, 'taskCard', id));
     getData();
   };
 
@@ -35,6 +30,7 @@ const Home = () => {
     <div className='Home'>
       <Box
         sx={{
+          gap: 5,
           display: 'flex',
           flexDirection: {
             xs: 'column',
@@ -53,35 +49,34 @@ const Home = () => {
               md: 'row',
             },
             gap: 3,
-            marginLeft: 3,
             alignItems: {
               xs: 'center',
               md: 'normal',
             },
+            paddingTop: 5,
           }}>
           <Box
             sx={{
-              maxWidth: 300,
+              width: 300,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'stretch',
             }}>
-            <Typography
+            <Box
               sx={{
                 border: '2px solid #1C588E',
-                width: 300,
                 backgroundColor: '#b0d5f8',
-                paddingTop: 1.5,
-                paddingBottom: 1.5,
-                paddingLeft: 1.5,
-                borderRadius: 3,
-                marginRight: 10,
-                marginLeft: 10,
-                marginY: 2,
-                fontWeight: 600,
+                padding: 1.5,
+                borderRadius: 2,
+                boxShadow: 2,
               }}>
-              To Do
-            </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                }}>
+                To Do
+              </Typography>
+            </Box>
             {data
               .filter((e) => {
                 return e.data().status === 'To do';
@@ -107,27 +102,26 @@ const Home = () => {
           </Box>
           <Box
             sx={{
-              maxWidth: 300,
+              width: 300,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'stretch',
             }}>
-            <Typography
+            <Box
               sx={{
                 border: '2px solid #CBC42B',
-                width: 300,
                 backgroundColor: '#fffcd2',
-                paddingTop: 1.5,
-                paddingBottom: 1.5,
-                paddingLeft: 1.5,
-                borderRadius: 3,
-                marginRight: 10,
-                marginLeft: 10,
-                marginY: 2,
-                fontWeight: 600,
+                padding: 1.5,
+                borderRadius: 2,
+                boxShadow: 2,
               }}>
-              In Progress
-            </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                }}>
+                In Progress
+              </Typography>
+            </Box>
             {data
               .filter((e) => {
                 return e.data().status === 'In Progress';
@@ -153,27 +147,26 @@ const Home = () => {
           </Box>
           <Box
             sx={{
-              maxWidth: 300,
+              width: 300,
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'center',
+              alignItems: 'stretch',
             }}>
-            <Typography
+            <Box
               sx={{
                 border: '2px solid #31A515',
-                width: 300,
                 backgroundColor: '#cff8c5',
-                paddingTop: 1.5,
-                paddingBottom: 1.5,
-                paddingLeft: 1.5,
-                borderRadius: 3,
-                marginRight: 10,
-                marginLeft: 10,
-                marginY: 2,
-                fontWeight: 600,
+                padding: 1.5,
+                borderRadius: 2,
+                boxShadow: 2,
               }}>
-              Finish
-            </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 600,
+                }}>
+                Done
+              </Typography>
+            </Box>
             {data
               .filter((e) => {
                 return e.data().status === 'Finish';
