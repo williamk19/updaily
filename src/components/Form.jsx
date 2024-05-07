@@ -80,13 +80,13 @@ const Form = ({ getData }) => {
       <Box>
         <Typography
           sx={{
-            fontSize: 25,
+            fontSize: 24,
             fontWeight: 'bold',
             textShadow: '1px 1px 1px rgba(0,0,0,0.25);',
           }}>
           UpDaily.
         </Typography>
-        <Typography fontSize={14}>
+        <Typography fontSize={12}>
           Simplify tasks in a Kanban-style interface, effortlessly organizing
           to-do lists for enhanced daily productivity and efficiency.
         </Typography>

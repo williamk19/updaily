@@ -71,7 +71,7 @@ const TaskCard = ({
       </CardContent>
       <Box
         sx={{
-          fontSize: 14,
+          fontSize: 12,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',

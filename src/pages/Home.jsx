@@ -57,7 +57,7 @@ const Home = () => {
           }}>
           <Box
             sx={{
-              width: 300,
+              width: 250,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'stretch',
@@ -102,7 +102,7 @@ const Home = () => {
           </Box>
           <Box
             sx={{
-              width: 300,
+              width: 250,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'stretch',
@@ -147,7 +147,7 @@ const Home = () => {
           </Box>
           <Box
             sx={{
-              width: 300,
+              width: 250,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'stretch',
