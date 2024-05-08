@@ -11,7 +11,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { addDoc, collection } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { db } from '../firebase';
+import { db } from 'config/firebase';
 
 const Form = ({ getData }) => {
   const [date, setDate] = useState(new Date());
