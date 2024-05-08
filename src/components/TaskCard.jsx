@@ -6,8 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
-import '../App.css';
+import { db } from 'config/firebase';
 
 const TaskCard = ({
   id,

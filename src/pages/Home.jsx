@@ -2,11 +2,10 @@ import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
-import TaskCard from '../components/TaskCard';
-import { db } from '../firebase';
-import '../App.css';
+import TaskCard from 'components/TaskCard';
+import { db } from 'config/firebase';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
-import Form from '../components/Form';
+import Form from 'components/Form';
 
 const Home = () => {
   const [data, setData] = useState([]);
