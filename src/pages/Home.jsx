@@ -4,15 +4,20 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import TaskCard from 'components/TaskCard';
 import { db } from 'config/firebase';
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc, where } from 'firebase/firestore';
 import Form from 'components/Form';
+import useAuthStore from 'store/useAuthStore';
 
 const Home = () => {
+  const { user } = useAuthStore((state) => state);
   const [data, setData] = useState([]);
   dayjs.extend(utc);
 
   const getData = async () => {
-    const querySnapshot = await getDocs(collection(db, 'taskCard'));
+    const querySnapshot = await getDocs(
+      collection(db, 'taskCard'),
+      where('userId', '==', user.uid),
+    );
     setData(querySnapshot.docs);
   };
 
