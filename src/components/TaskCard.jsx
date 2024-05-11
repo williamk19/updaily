@@ -30,7 +30,6 @@ const TaskCard = ({
     const data = {
       status,
     };
-    console.log(data, id);
     await updateDoc(doc(db, 'taskCard', id), data);
     getData();
   };
@@ -46,7 +45,7 @@ const TaskCard = ({
       variant='outlined'
       sx={{
         width: '100%',
-        marginTop: 2,
+        marginBottom: 2,
         boxShadow: 2,
         maxWidth: '500px',
         display: 'flex',
@@ -62,7 +61,7 @@ const TaskCard = ({
           {judul}
         </Typography>
         <Typography
-          sx={{ mb: 1.5 }}
+          sx={{ mb: 1.5, fontSize: 13, fontWeight: 500 }}
           color='text.secondary'>
           {`${formattedDate}`}
         </Typography>
@@ -98,7 +97,7 @@ const TaskCard = ({
           onClick={() => {
             handleDeleteButton(db, id);
           }}>
-          <DeleteIcon style={{ fontSize: 30 }} />
+          <DeleteIcon style={{ fontSize: 20 }} />
         </IconButton>
       </Box>
     </Card>

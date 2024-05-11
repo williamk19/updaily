@@ -12,8 +12,10 @@ import dayjs from 'dayjs';
 import { addDoc, collection } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { db } from 'config/firebase';
+import useAuthStore from 'store/useAuthStore';
 
 const Form = ({ getData }) => {
+  const { user } = useAuthStore((state) => state);
   const [date, setDate] = useState(new Date());
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -24,7 +26,7 @@ const Form = ({ getData }) => {
     if (isAlertOpen === false) {
       setTimeout(() => {
         setAlertMessage('');
-      }, 3000)
+      }, 3000);
     }
   }, [isAlertOpen]);
 
@@ -38,6 +40,7 @@ const Form = ({ getData }) => {
     }
 
     const data = {
+      userId: user.uid,
       date: date.toString() + ' +7',
       title: title,
       description: description,
@@ -59,12 +62,18 @@ const Form = ({ getData }) => {
   return (
     <Box
       sx={{
-        paddingTop: 5,
+        padding: {
+          xs: '3rem 0',
+          md: '0 0',
+        },
         display: 'flex',
         flexDirection: 'column',
         gap: 4,
-        maxWidth: 300,
-        minWidth: 300,
+        width: {
+          xs: '85vw',
+          sm: '80vw',
+          md: '27%'
+        },
       }}>
       <Snackbar
         open={isAlertOpen}
@@ -86,7 +95,7 @@ const Form = ({ getData }) => {
           }}>
           UpDaily.
         </Typography>
-        <Typography fontSize={12}>
+        <Typography fontSize={14}>
           Simplify tasks in a Kanban-style interface, effortlessly organizing
           to-do lists for enhanced daily productivity and efficiency.
         </Typography>

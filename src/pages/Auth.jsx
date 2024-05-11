@@ -13,31 +13,37 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import Login from 'components/Auth/Login';
 import Register from 'components/Auth/Register';
 import useAuthStore from 'store/useAuthStore';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <Box
       role='tabpanel'
       hidden={value !== index}
       id={`tabpanel-${index}`}
       aria-labelledby={`tab-${index}`}
       {...other}>
-      {value === index && (
-        <Box>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
+      {value === index && <Box>{children}</Box>}
+    </Box>
   );
 }
 
 const Auth = () => {
   const navigate = useNavigate();
-  const { authTabIndex, pageTitle, pageSubtitle, setAuthTabIndex, signInUser } =
-    useAuthStore((state) => state);
+  const {
+    authTabIndex,
+    pageTitle,
+    pageSubtitle,
+    setAuthTabIndex,
+    signInUser,
+    user,
+  } = useAuthStore((state) => state);
+
+  if (user) {
+    return <Navigate to='/' />;
+  }
 
   const handleChange = (event, newValue) => {
     setAuthTabIndex(newValue);

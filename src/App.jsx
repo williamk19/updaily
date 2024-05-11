@@ -1,43 +1,26 @@
 import Auth from 'pages/Auth';
 import './App.css';
 import Home from './pages/Home';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import useAuthStore from 'store/useAuthStore';
+import {
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom';
 
 function App() {
-  const { token, user } = useAuthStore((state) => ({
-    token: state.token,
-    user: state.user,
-  }));
-
-  // const router =
-  //   token !== null && user !== null
-  //     ? createBrowserRouter([
-  //         {
-  //           path: '/',
-  //           element: <Home />,
-  //         },
-  //       ])
-  //     : createBrowserRouter([
-  //         {
-  //           path: '/auth',
-  //           element: <Auth />,
-  //         },
-  //       ]);
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <Home />,
-    },
+  const authorizedRouter = createBrowserRouter([
     {
       path: '/auth',
       element: <Auth />,
+    },
+    {
+      path: '/',
+      element: <Home />,
     },
   ]);
 
   return (
     <div className='App'>
-      <RouterProvider router={router} />
+      <RouterProvider router={authorizedRouter} />
     </div>
   );
 }

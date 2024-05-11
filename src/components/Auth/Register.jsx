@@ -24,8 +24,8 @@ const Register = () => {
         variant='outlined'
       />
       <TextField
-        id='password'
-        name='password'
+        id='confirm-password'
+        name='confirm-password'
         label='Confrim Password'
         type='password'
         variant='outlined'
