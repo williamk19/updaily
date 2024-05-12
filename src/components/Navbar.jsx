@@ -10,7 +10,6 @@ const Navbar = () => {
   const signOutUser = useAuthStore((state) => state.signOutUser);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  console.log(user);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -68,6 +67,7 @@ const Navbar = () => {
         MenuListProps={{
           'aria-labelledby': 'menu-button',
         }}>
+        <MenuItem disabled>{user.email}</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </Box>

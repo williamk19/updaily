@@ -3,6 +3,7 @@ import { persist, devtools, createJSONStorage } from 'zustand/middleware';
 
 const useAuthPageStore = (set) => ({
   authTabIndex: 0,
+  showPassword: false,
   pageTitle: "Sign In",
   pageSubtitle: "Sign in using your registered email and password",
   error: null,
@@ -12,7 +13,9 @@ const useAuthPageStore = (set) => ({
     pageSubtitle: value === 0
       ? "Sign in using your registered email and password"
       : "Register new account in Updaily using your email",
-  }))
+    showPassword: false,
+  })),
+  toggleShowPassword: () => set((state) => ({ showPassword: !state.showPassword }))
 });
 
 const useAuthCredentialStore = (set) => ({

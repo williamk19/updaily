@@ -44,10 +44,9 @@ const TaskCard = ({
       className='TaskCard'
       variant='outlined'
       sx={{
-        width: '100%',
         marginBottom: 2,
         boxShadow: 2,
-        maxWidth: '500px',
+        maxWidth: '300px',
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 2,
@@ -75,14 +74,14 @@ const TaskCard = ({
           justifyContent: 'space-between',
         }}
         color='text.secondary'>
-        <FormControl style={{ width: 150, margin: 20 }}>
+        <FormControl style={{ margin: 15 }}>
           <Select
             labelId='demo-simple-select-label'
             id='demo-simple-select'
             value={status}
             onChange={handleChange}
-            style={{ height: 40 }}
-            sx={{ borderRadius: 3, backgroundColor: color, boxShadow: 2 }}>
+            size='small'
+            sx={{ borderRadius: 2, backgroundColor: color, boxShadow: 2, fontSize: 14 }}>
             <MenuItem value={'To do'}>To do</MenuItem>
             <MenuItem value={'In Progress'}>In Progress</MenuItem>
             <MenuItem value={'Finish'}>Finish</MenuItem>

@@ -83,7 +83,7 @@ const Home = () => {
               },
               width: {
                 xs: '100%',
-                md: '66%'
+                md: '70%'
               },
               gap: 3,
               alignItems: {
